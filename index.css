@@ -1,22 +1,29 @@
 @import "tailwindcss";
 body {
-    background: #FFFFFF;
+  background: #ffffff;
 }
 
 .signIn {
-    display: flex;
-    justify-self: center;
-    flex-direction: column;
-    gap: clamp(10px,0.9vw,15px);
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+  gap: clamp(10px, 0.9vw, 15px);
 }
 
 .image-section {
- flex: 1;
- /* height: 93vh; */
- height: 100vh;
-    border-radius: 20px;
-    background-image: url("images/signIn.png");
-    background-size: cover;
-    background-position: center;
-  }
- 
+  flex: 1;
+  height: 96vh;
+  border-radius: 25px;
+  background-image: url("images/signIn.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.sign-up {
+  flex: 1;
+  height: 96vh;
+  border-radius: 25px;
+  background-image: url("images/signUp.png");
+  background-size: cover;
+  background-position: center;
+}
