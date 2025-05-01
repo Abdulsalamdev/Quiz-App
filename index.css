@@ -2,23 +2,18 @@
 body {
     background: #FFFFFF;
 }
-.container {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
+
 .signIn {
-    
     display: flex;
     justify-self: center;
     flex-direction: column;
-    gap: 15px;
+    gap: clamp(10px,0.9vw,15px);
 }
 
 .image-section {
  flex: 1;
- height: 93vh;
+ /* height: 93vh; */
+ height: 100vh;
     border-radius: 20px;
     background-image: url("images/signIn.png");
     background-size: cover;
