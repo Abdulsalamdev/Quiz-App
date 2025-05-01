@@ -27,3 +27,32 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+.quiz-hero {
+  border-radius: 25px;
+  background-image: linear-gradient(
+      to bottom right,
+      #83a5d6,
+      rgba(34, 34, 222, 0.6)
+    ),
+    url("images/quiz.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.hero-content {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

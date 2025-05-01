@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dadhboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body>
+    <main class="p-[25px]">
+      <div
+        class="text-[clamp(18px,1.4vw,25px)] text-[#000000] font-bold mb-[20px]"
+      >
+        Welcome
+        <span class="text-[#4EA4FF] font-semibold">Silent Architect</span>
+      </div>
+      <section class="quiz-hero p-[clamp(30px,3vw,50px)]">
+        <div class="hero-content">
+          <div
+            class="text-[#D6E6FF] font-semibold text-[clamp(27px,2.5vw,40px)] mb-[clamp(15px,1.8vw,30px)] max-w-[400px]"
+          >
+            Test Your Knowlegde with Quizzes
+          </div>
+
+          <div
+            class="text-[#D6E6FF] text-[17px] font-medium mb-[clamp(15px,1.8vw,30px)] max-w-[300px]"
+          >
+            You're just looking for a playful way to learn new facts, our
+            quizzes are designed to entertain and educate.
+          </div>
+          <button
+            class="text-[#094298] text-[20px] p-[12px] rounded-[10px] font-semibold bg-[#FFFFFF]"
+          >
+            Play Now
+          </button>
+        </div>
+      </section>
+      <div class="flex gap-[20px] my-[30px] items-center">
+        <div class="relative grow">
+          <input
+            type="text"
+            id="search"
+            name="text"
+            placeholder="Search"
+            required
+            class="text-[#343333] text-[18px] py-[10px] px-[15px] rounded-[15px] bg-[#E8E8E8] placeholder:text-[#464545] w-[100%]"
+          />
+          <img
+            src="/images/search.png"
+            width="20px"
+            height="20px"
+            class="absolute top-[11px] right-[20px]"
+            alt=""
+          />
+        </div>
+        <div class="p-[10px] rounded-[5px] bg-[#E8E8E8]">
+          <img src="/images/filter.png" alt="" width="20px" height="32px" />
+        </div>
+      </div>
+      <p class="text-[000000] text-[20px] font-medium">Categories</p>
+    </main>
+  </body>
+
+</html>
