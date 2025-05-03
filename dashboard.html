@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dadhboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/index.css" />
   </head>
   <body>
@@ -44,22 +50,144 @@
             name="text"
             placeholder="Search"
             required
-            class="text-[#343333] text-[18px] py-[10px] px-[15px] rounded-[15px] bg-[#E8E8E8] placeholder:text-[#464545] w-[100%]"
+            class="text-[#343333] text-[18px] py-[20px] px-[25px] rounded-[15px] bg-[#E8E8E8] placeholder:text-[#464545] w-[100%]"
           />
           <img
             src="/images/search.png"
             width="20px"
             height="20px"
-            class="absolute top-[11px] right-[20px]"
+            class="absolute top-[25px] right-[20px]"
             alt=""
           />
         </div>
-        <div class="p-[10px] rounded-[5px] bg-[#E8E8E8]">
+        <div class="p-[20px] rounded-[10px] bg-[#E8E8E8]">
           <img src="/images/filter.png" alt="" width="20px" height="32px" />
         </div>
       </div>
-      <p class="text-[000000] text-[20px] font-medium">Categories</p>
+      <p class="text-[000000] text-[30px] font-medium mb-[30px]">Categories</p>
+      <section
+        class="flex gap-[20px] items-center justify-center flex-wrap card-container"
+      >
+        <div
+          class="text-[clamp(30px,2.5vw,40px)] font-semibold text-center p-[30px] card"
+        >
+          100 Level Courses
+        </div>
+        <div
+          class="text-[clamp(30px,2.5vw,40px)] font-semibold text-center p-[30px] card"
+        >
+          200 Level Courses
+        </div>
+        <div
+          class="text-[clamp(30px,2.5vw,40px)] font-semibold text-center p-[30px] card"
+        >
+          300 Level Courses
+        </div>
+        <div
+          class="text-[clamp(30px,2.5vw,40px)] font-semibold text-center p-[30px] card"
+        >
+          400 Level Courses
+        </div>
+        <div
+          class="text-[clamp(30px,2.5vw,40px)] font-semibold text-center p-[30px] card"
+        >
+          500 Level Courses
+        </div>
+      </section>
+      <section
+        class="m-[30px] flex justify-center items-center gap-[20px] flex-col"
+      >
+        <p class="text-[#000000] font-bold text-[30px]">Recent Activity</p>
+        <div class="flex gap-[15px] w-full justify-between recent items-center">
+          <div>
+            <div class="text-[#000000] font-semibold text-[27px]">GNS 101</div>
+            <div class="text-[#343333] font-medium text-[19px]">
+              40 Questions
+            </div>
+          </div>
+          <div class="score" id="score">30/40</div>
+        </div>
+        <div class="flex gap-[15px] w-full justify-between recent items-center">
+          <div>
+            <div class="text-[#000000] font-semibold text-[27px]">GNS 101</div>
+            <div class="text-[#343333] font-medium text-[19px]">
+              40 Questions
+            </div>
+          </div>
+          <div class="score" id="score">30/40</div>
+        </div>
+        <div class="flex gap-[15px] w-full justify-between recent items-center">
+          <div>
+            <div class="text-[#000000] font-semibold text-[27px]">GNS 101</div>
+            <div class="text-[#343333] font-medium text-[19px]">
+              40 Questions
+            </div>
+          </div>
+          <div class="score" id="score">30/40</div>
+        </div>
+        <div class="flex gap-[15px] w-full justify-between recent items-center">
+          <div>
+            <div class="text-[#000000] font-semibold text-[27px]">GNS 101</div>
+            <div class="text-[#343333] font-medium text-[19px]">
+              40 Questions
+            </div>
+          </div>
+          <div class="score" id="score">30/40</div>
+        </div>
+      </section>
     </main>
   </body>
+  <script>
+    const scoreEl = document.getElementById("score");
+    let targetScore = 30;
+    let maxScore = 40;
+    let current = 0;
 
+    const interval = setInterval(() => {
+    
+      if (current < targetScore) {
+        current++;
+        scoreEl.textContent = `${current}/${maxScore}`;
+      } else {
+        clearInterval(interval);
+      }
+    }, 100);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          } else {
+            entry.target.classList.remove("show"); // remove when leaving viewport
+          }
+        });
+      },
+      {
+        threshold: 0.5, // adjust sensitivity
+      }
+    );
+
+    document.querySelectorAll(".card").forEach((card) => {
+      observer.observe(card);
+    });
+
+    const recentObeserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if(entry.isIntersecting) {
+            entry.target.classList.add("show")
+          }else {
+            entry.target.classList.remove("show")
+          }
+        })
+      },
+      {
+        threshold : 0.5
+      }
+    )
+    document.querySelectorAll(".recent").forEach((card) => {
+      recentObeserver.observe(card)
+    })
+  </script>
 </html>

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 body {
   background: #ffffff;
+   font-family: "Roboto", sans-serif;
 }
 
 .signIn {
@@ -47,7 +48,64 @@ body {
   animation: fadeInUp 1s ease-out forwards;
   animation-delay: 0.3s;
 }
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 300px;
+  max-width: 300px;
+  min-height: 200px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+  padding: 20px;
+  /* text-align: center; */
+}
+.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.recent {
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.6s ease-out;
+}
+.recent.show{
+  opacity: 1;
+  transform: translateY(0);
+}
 
+.score {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2196F3;
+  min-width: 60px;
+  text-align: right;
+  animation: pulse 1s ease infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
 /* Keyframes */
 @keyframes fadeInUp {
   to {
@@ -56,3 +114,15 @@ body {
   }
 }
 
+@media (min-width: 768px) {
+  .card-container {
+    justify-content: space-around;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+}
