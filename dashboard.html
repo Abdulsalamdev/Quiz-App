@@ -138,21 +138,6 @@
     </main>
   </body>
   <script>
-    const scoreEl = document.getElementById("score");
-    let targetScore = 30;
-    let maxScore = 40;
-    let current = 0;
-
-    const interval = setInterval(() => {
-    
-      if (current < targetScore) {
-        current++;
-        scoreEl.textContent = `${current}/${maxScore}`;
-      } else {
-        clearInterval(interval);
-      }
-    }, 100);
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -189,5 +174,6 @@
     document.querySelectorAll(".recent").forEach((card) => {
       recentObeserver.observe(card)
     })
+ 
   </script>
 </html>
