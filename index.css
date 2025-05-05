@@ -154,7 +154,31 @@ select:focus {
 .select-group {
   margin-top: 15px;
 }
+.quiz-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.8s ease-out;
+}
 
+.quiz-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #06b6d4, #3b82f6); /* subtle reverse */
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 @keyframes pulse {
