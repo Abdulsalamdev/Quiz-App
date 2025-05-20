@@ -1,153 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Timed Quiz</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
-
-    .quiz-container {
-      max-width: 600px;
-      margin: auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    #timer {
-      text-align: center;
-      font-size: 18px;
-      color: red;
-      margin-bottom: 20px;
-    }
-
-    .question {
-      margin-bottom: 20px;
-    }
-
-    .question h3 {
-      margin-bottom: 8px;
-    }
-
-    label {
-      display: block;
-      margin: 5px 0;
-      background-color: #eee;
-      padding: 8px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background: royalblue;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: darkblue;
-    }
-
-    #result {
-      margin-top: 20px;
-      font-weight: bold;
-      color: green;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-
-<div class="quiz-container">
-  <h2>Timed Quiz</h2>
-  <div id="timer">Time Left: 30s</div>
-
-  <form id="quizForm">
-    <div class="question">
-      <h3>1. What is the capital of France?</h3>
-      <label><input type="radio" name="q1" value="a"> Berlin</label>
-      <label><input type="radio" name="q1" value="b"> Madrid</label>
-      <label><input type="radio" name="q1" value="c"> Paris</label> <!-- correct -->
-      <label><input type="radio" name="q1" value="d"> Rome</label>
-    </div>
-
-    <div class="question">
-      <h3>2. What is 2 + 2?</h3>
-      <label><input type="radio" name="q2" value="a"> 3</label>
-      <label><input type="radio" name="q2" value="b"> 4</label> <!-- correct -->
-      <label><input type="radio" name="q2" value="c"> 5</label>
-      <label><input type="radio" name="q2" value="d"> 6</label>
-    </div>
-
-    <div class="question">
-      <h3>3. Which planet is called the Red Planet?</h3>
-      <label><input type="radio" name="q3" value="a"> Earth</label>
-      <label><input type="radio" name="q3" value="b"> Venus</label>
-      <label><input type="radio" name="q3" value="c"> Mars</label> <!-- correct -->
-      <label><input type="radio" name="q3" value="d"> Jupiter</label>
-    </div>
-
-    <button type="submit">Submit</button>
-  </form>
-
-  <div id="result"></div>
-</div>
-
-<script>
-  const correctAnswers = {
-    q1: "c",
-    q2: "b",
-    q3: "c"
-  };
-
-  let timeLeft = 30;
-  const timerDisplay = document.getElementById("timer");
-  const quizForm = document.getElementById("quizForm");
-  const resultDisplay = document.getElementById("result");
-
-  const countdown = setInterval(() => {
-    timeLeft--;
-    timerDisplay.textContent = `Time Left: ${timeLeft}s`;
-
-    if (timeLeft <= 0) {
-      clearInterval(countdown);
-      timerDisplay.textContent = "Time's up!";
-      quizForm.requestSubmit();
-    }
-  }, 1000);
-
-  quizForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    clearInterval(countdown);
-
-    let score = 0;
-    const formData = new FormData(quizForm);
-
-    for (const [question, answer] of Object.entries(correctAnswers)) {
-      if (formData.get(question) === answer) {
-        score++;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
       }
-    }
+      .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 12px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body class="p-4 font-sans bg-gray-50">
+    <div class="flex justify-between items-center mb-4">
+      <div id="timer" class="text-lg font-semibold text-blue-700">Time: 60</div>
+      <button id="submitBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+    </div>
 
-    resultDisplay.textContent = `You scored ${score} out of 3`;
-  });
-</script>
+    <div id="quiz-container" class="mb-6"></div>
 
-</body>
+    <div class="flex gap-2 mb-6 flex-wrap" id="tracker"></div>
+
+    <div class="flex justify-between">
+      <button id="prevBtn" class="bg-gray-300 px-4 py-2 rounded">Prev</button>
+      <button id="nextBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Next</button>
+    </div>
+
+    <div id="resultModal" class="modal">
+      <div class="modal-content">
+        <h2 class="text-xl font-bold mb-2">Quiz Result</h2>
+        <p id="scoreDisplay" class="mb-4">Your score: </p>
+        <button id="viewCorrections" class="bg-green-500 text-white px-4 py-2 rounded">View Corrections</button>
+      </div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          question: "What is the capital of France?",
+          options: ["Berlin", "Madrid", "Paris", "London"],
+          answer: "Paris",
+        },
+        {
+          question: "2 + 2 = ?",
+          options: ["3", "4", "5", "6"],
+          answer: "4",
+        },
+        {
+          question: "What is the color of the sky?",
+          options: ["Blue", "Green", "Red", "Yellow"],
+          answer: "Blue",
+        },
+      ];
+
+      let currentIndex = 0;
+      let selectedAnswers = new Array(questions.length).fill(null);
+
+      const quizContainer = document.getElementById("quiz-container");
+      const tracker = document.getElementById("tracker");
+
+      function loadQuestion(index) {
+        const q = questions[index];
+        quizContainer.innerHTML = `
+          <div class="mb-4">
+            <p class="text-lg font-semibold">${index + 1}. ${q.question}</p>
+            <div class="mt-2">
+              ${q.options
+                .map(
+                  (opt, i) => `
+                <label class="block mb-1">
+                  <input type="radio" name="question${index}" value="${opt}" ${
+                    selectedAnswers[index] === opt ? "checked" : ""
+                  } class="mr-2"> ${opt}
+                </label>`
+                )
+                .join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      function updateTracker() {
+        tracker.innerHTML = questions
+          .map((_, i) => `
+            <div class="w-8 h-8 flex items-center justify-center rounded-full text-white text-sm font-semibold cursor-pointer ${
+              selectedAnswers[i] ? "bg-green-500" : "bg-red-400"
+            }" onclick="jumpTo(${i})">
+              ${i + 1}
+            </div>
+          `)
+          .join("");
+      }
+
+      function jumpTo(i) {
+        currentIndex = i;
+        loadQuestion(i);
+      }
+
+      quizContainer.addEventListener("change", (e) => {
+        if (e.target.name.startsWith("question")) {
+          selectedAnswers[currentIndex] = e.target.value;
+          updateTracker();
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (currentIndex < questions.length - 1) {
+          currentIndex++;
+          loadQuestion(currentIndex);
+        }
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          loadQuestion(currentIndex);
+        }
+      });
+
+      document.getElementById("submitBtn").addEventListener("click", () => {
+        let score = 0;
+        questions.forEach((q, i) => {
+          if (selectedAnswers[i] === q.answer) score++;
+        });
+        document.getElementById("scoreDisplay").textContent = `Your score: ${score}/${questions.length}`;
+        document.getElementById("resultModal").style.display = "block";
+      });
+
+      document.getElementById("viewCorrections").addEventListener("click", () => {
+        quizContainer.innerHTML = questions
+          .map((q, i) => `
+            <div class="mb-4">
+              <p class="font-semibold">${i + 1}. ${q.question}</p>
+              <p>Your answer: <span class="${
+                selectedAnswers[i] === q.answer ? "text-green-600" : "text-red-500"
+              }">${selectedAnswers[i] || "No answer"}</span></p>
+              <p>Correct answer: <span class="text-green-700">${q.answer}</span></p>
+            </div>
+          `)
+          .join("");
+        document.getElementById("resultModal").style.display = "none";
+        document.getElementById("tracker").style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        const modal = document.getElementById("resultModal");
+        if (e.target == modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      let time = 60;
+      const timerEl = document.getElementById("timer");
+      const timerInterval = setInterval(() => {
+        time--;
+        timerEl.textContent = `Time: ${time}`;
+        if (time <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById("submitBtn").click();
+        }
+      }, 1000);
+
+      // Initial load
+      loadQuestion(currentIndex);
+      updateTracker();
+    </script>
+  </body>
 </html>
